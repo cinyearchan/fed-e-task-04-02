@@ -17,4 +17,4 @@ export const decrement = payload => ({ type: DECREMENT, payload })
 
 export const increment_async = payload => ({ type: INCREMENT_ASYNC, payload })
 
-export const decrement_async = () => ({ type: DECREMENT_ASYNC })
+export const decrement_async = payload => ({ type: DECREMENT_ASYNC, payload })

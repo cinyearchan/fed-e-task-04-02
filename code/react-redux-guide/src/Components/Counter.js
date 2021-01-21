@@ -6,7 +6,7 @@ function Counter ({ count, increment, decrement, increment_async, decrement_asyn
   return <div>
     <button onClick={ () => increment_async(20) }>+</button>
     <span>{ count }</span>
-    <button onClick={ () => decrement(5) }>-</button>
+    <button onClick={ () => decrement_async(5) }>-</button>
   </div>
 }
 
