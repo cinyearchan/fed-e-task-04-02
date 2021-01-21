@@ -6,17 +6,13 @@ const initialState = {
   count: 0
 }
 
-function handleIncrement (state) {
-  return {
-    count: state.count + 1
-  }
-}
+const handleIncrement = (state, action) => ({
+  count: state.count + action.payload
+})
 
-function handleDecrement (state) {
-  return {
-    count: state.count - 1
-  }
-}
+const handleDecrement = (state, action) => ({
+  count: state.count - action.payload
+})
 
 export default createReducer({
   [increment]: handleIncrement,
