@@ -1,5 +1,12 @@
+import React from 'react'
+import Counter from './Components/Counter'
+import Modal from './Components/modal'
+
 function App() {
-  return <div>App working</div>
+  return <div>
+    <Counter></Counter>
+    <Modal></Modal>
+  </div>
 }
 
 export default App;
