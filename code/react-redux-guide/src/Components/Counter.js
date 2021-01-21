@@ -4,9 +4,9 @@ import * as counterActions from '../store/actions/counter.actions'
 
 function Counter ({ count, increment, decrement, increment_async, decrement_async }) {
   return <div>
-    <button onClick={ () => increment_async(20) }>+</button>
+    <button onClick={ increment }>+</button>
     <span>{ count }</span>
-    <button onClick={ () => decrement_async(5) }>-</button>
+    <button onClick={ decrement }>-</button>
   </div>
 }
 
