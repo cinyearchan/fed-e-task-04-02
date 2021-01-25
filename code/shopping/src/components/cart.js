@@ -18,6 +18,7 @@ class Cart extends Component {
                 src="images/01.webp"
                 width="100"
                 height="100"
+                alt=""
               />
               <span className="cart-item-title">
                 小户型简约现代网红双人三人客厅科技布免洗布艺
@@ -38,6 +39,7 @@ class Cart extends Component {
                 src="images/02.webp"
                 width="100"
                 height="100"
+                alt=""
               />
               <span className="cart-item-title">11全网通4G手机官方iPhonexr</span>
             </div>
