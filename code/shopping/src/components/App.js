@@ -1,5 +1,11 @@
+import Cart from "./cart";
+import Product from "./product";
+
 function App() {
-  return <div>App working</div>
+  return <div>
+    <Product />
+    <Cart />
+  </div>
 }
 
 export default App;
