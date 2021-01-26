@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions'
-import { addProductToLocalCart } from '../actions/cart.actions'
+import { addProductToLocalCart, saveCarts } from '../actions/cart.actions'
 
 const initialState = []
 
@@ -16,6 +16,9 @@ const handleAddProductToLocalCart = (state, action) => {
   return newState
 }
 
+const handleSaveCarts = (state, action) => action.payload
+
 export default createReducer({
-  [addProductToLocalCart]: handleAddProductToLocalCart
+  [addProductToLocalCart]: handleAddProductToLocalCart,
+  [saveCarts]: handleSaveCarts
 }, initialState)

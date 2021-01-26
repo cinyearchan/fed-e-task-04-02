@@ -1,5 +1,5 @@
 import { takeEvery, put } from 'redux-saga/effects'
-import { addProductToCart, addProductToLocalCart } from '../actions/cart.actions'
+import { addProductToCart, addProductToLocalCart, loadCarts, saveCarts } from '../actions/cart.actions'
 import axios from 'axios'
 
 function* handleAddProductToCart (action) {
@@ -7,6 +7,12 @@ function* handleAddProductToCart (action) {
   yield put(addProductToLocalCart(data))
 }
 
+function* handleLoadCarts (action) {
+  const { data } = yield axios.get('http://localhost:3005/cart')
+  yield put(saveCarts(data))
+}
+
 export default function* cartSaga () {
   yield takeEvery(addProductToCart, handleAddProductToCart)
+  yield takeEvery(loadCarts, handleLoadCarts)
 }
