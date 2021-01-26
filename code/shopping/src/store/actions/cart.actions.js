@@ -12,3 +12,7 @@ export const saveCarts = createAction('saveCarts')
 export const deleteProductFromCart = createAction('deleteProductFromCart')
 // 删除本地购物车中的商品
 export const deleteProductFromLocalCart = createAction('deleteProductFromLocalCart')
+// 修改购物车中商品数量
+export const changeServiceProductNumber = createAction('changeProductNumber')
+// 更新购物车中商品信息
+export const changeLocalProductNumber = createAction('changeLocalProductNumber')

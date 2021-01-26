@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions'
-import { addProductToLocalCart, deleteProductFromLocalCart, saveCarts } from '../actions/cart.actions'
+import { addProductToLocalCart, deleteProductFromLocalCart, saveCarts, changeLocalProductNumber } from '../actions/cart.actions'
 
 const initialState = []
 
@@ -24,8 +24,16 @@ const handleDeleteProductFromLocalCart = (state, action) => {
   return newState
 }
 
+const handlechangeLocalProductNumber = (state, action) => {
+  const newState = JSON.parse(JSON.stringify(state))
+  const product = newState.find(product => product.id === action.payload.id)
+  product.count = action.payload.count
+  return newState
+}
+
 export default createReducer({
   [addProductToLocalCart]: handleAddProductToLocalCart,
   [saveCarts]: handleSaveCarts,
-  [deleteProductFromLocalCart]: handleDeleteProductFromLocalCart
+  [deleteProductFromLocalCart]: handleDeleteProductFromLocalCart,
+  [changeLocalProductNumber]: handlechangeLocalProductNumber
 }, initialState)

@@ -10,7 +10,7 @@ class Cart extends Component {
   }
 
   render() {
-    const { carts, deleteProductFromCart } = this.props
+    const { carts, deleteProductFromCart, changeServiceProductNumber } = this.props
     return (
       <section className="container content-section">
         <h2 className="section-header">购物车</h2>
@@ -37,7 +37,7 @@ class Cart extends Component {
                 </div>
                 <span className="cart-price cart-column">￥{product.price}</span>
                 <div className="cart-quantity cart-column">
-                  <input className="cart-quantity-input" type="number" value={product.count} onChange={() => {}}/>
+                  <input className="cart-quantity-input" type="number" value={product.count} onChange={(e) => changeServiceProductNumber({ cid:product.id, count: e.target.value })}/>
                   <button className="btn btn-danger" type="button" onClick={() => deleteProductFromCart(product.id)}>
                     删除
                   </button>
