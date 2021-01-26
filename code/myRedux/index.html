@@ -12,6 +12,8 @@
     <button id="decrement">-</button>
   </div>
   <script src="./myRedux.js"></script>
+  <script src="./middlewares/logger.js"></script>
+  <script src="./middlewares//thunk.js"></script>
   <script>
     // 通过 enhancer 对 store 进行增强
     // 实现异步处理 store
@@ -42,7 +44,8 @@
           return state
       }
     }
-    var store = createStore(reducer, 0, enhancer)
+    // var store = createStore(reducer, 0, enhancer)
+    var store = createStore(reducer, 0, applyMiddleware(logger, thunk))
 
     store.subscribe(function () {
       document.getElementById('box').innerHTML = store.getState()
@@ -51,11 +54,13 @@
     document.getElementById('increment').onclick = function () {
       // store.dispatch({ type: 'increment' })
       // 异步操作
-      store.dispatch(function (dispatch) {
-        setTimeout(function () {
-          dispatch({ type: 'increment' })
-        }, 1000)
-      })
+      // store.dispatch(function (dispatch) {
+      //   setTimeout(function () {
+      //     dispatch({ type: 'increment' })
+      //   }, 1000)
+      // })
+      // applyMiddleware 中间件执行顺序 logger -> thunk -> reducer
+      store.dispatch({ type: 'increment' })
     }
 
     document.getElementById('decrement').onclick = function () {

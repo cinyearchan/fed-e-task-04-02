@@ -77,3 +77,54 @@ if (typeof enhancer !== 'undefined') {
   return enhancer(createStore)(reducer, preloadedState)
 }
 ```
+
+#### `applyMiddleware`
+- `applyMiddleware` 就是 `redux` 封装好的 `enhancer` 函数
+- 中间件两层函数的参数分别是什么
+  - 第一层 store，就是简化版的 store，只有 dispatch 和 getState
+  - 第二层 next，最后一个中间件之前的中间件，next 都是指下一个中间件，最后一个中间件里的 next 就是 dispatch 函数，即调用 reducer
+
+```javascript
+// applyMiddleware 就是封装好的 enhancer 函数，所以要遵守 enhancer 函数的规定
+function applyMiddleware (...middlewares) {
+  return function (createStore) {
+    return function (reducer, preloadedState) {
+      // 创建 store
+      var store = createStore(reducer, preloadedState)
+      // 简化版 store
+      var middlewareAPI = {
+        getState: store.getState,
+        dispatch: store.dispatch
+      }
+      // 调用各个中间件的第一层函数，传递简化版的 store 对象
+      var chain = middlewares.map(middleware => middleware(middlewareAPI))
+      // 最后一个中间件函数的 next 是 dispatch
+      var dispatch = compose(...chain)(store.dispatch)
+      return {
+        ...store,
+        dispatch
+      }
+    }
+  }
+}
+
+function compose () {
+  var func = [...arguments]
+  return function (dispatch) {
+    // 反向的，从最后一个中间件开始调用
+    // 例如正向 logger -> thunk -> dispatch(即 reducer)
+    // 反向为 dispatch -> thunk -> logger
+    // 将下一个中间件的执行结果作为参数传递给上一个中间件
+    for (var i = func.length - 1; i >= 0; i--) {
+      dispatch = func[i](dispatch)
+    }
+    return dispatch
+  }
+}
+```
+
+> applyMiddleware 的关键在于 compose 函数对中间件调用关系的“反向构建”
+
+
+#### `bindActionCreators`
+

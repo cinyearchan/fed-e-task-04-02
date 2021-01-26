@@ -59,3 +59,40 @@ function isPlainObject (obj) {
   }
   return Object.getPrototypeOf(obj) === proto
 }
+
+// applyMiddleware 就是封装好的 enhancer 函数，所以要遵守 enhancer 函数的规定
+function applyMiddleware (...middlewares) {
+  return function (createStore) {
+    return function (reducer, preloadedState) {
+      // 创建 store
+      var store = createStore(reducer, preloadedState)
+      // 简化版 store
+      var middlewareAPI = {
+        getState: store.getState,
+        dispatch: store.dispatch
+      }
+      // 调用各个中间件的第一层函数，传递简化版的 store 对象
+      var chain = middlewares.map(middleware => middleware(middlewareAPI))
+      // 最后一个中间件函数的 next 是 dispatch
+      var dispatch = compose(...chain)(store.dispatch)
+      return {
+        ...store,
+        dispatch
+      }
+    }
+  }
+}
+
+function compose () {
+  var func = [...arguments]
+  return function (dispatch) {
+    // 反向的，从最后一个中间件开始调用
+    // 例如正向 logger -> thunk -> dispatch(即 reducer)
+    // 反向为 dispatch -> thunk -> logger
+    // 将下一个中间件的执行结果作为参数传递给上一个中间件
+    for (var i = func.length - 1; i >= 0; i--) {
+      dispatch = func[i](dispatch)
+    }
+    return dispatch
+  }
+}
