@@ -64,3 +64,16 @@ function createStore (reducer, preloadedState) {
     return Object.getPrototypeOf(obj) === proto
   }
   ```
+
+#### `createStore` 第三个参数 `enhancer`
+- 判断可选参数 `enhancer` 有没有传递
+- 判断 `enhancer` 是不是函数
+
+```javascript
+if (typeof enhancer !== 'undefined') {
+  if (typeof enhancer !== 'function') {
+    throw new Error('enhancer 必须是函数')
+  }
+  return enhancer(createStore)(reducer, preloadedState)
+}
+```

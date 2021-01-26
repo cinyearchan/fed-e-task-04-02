@@ -13,6 +13,25 @@
   </div>
   <script src="./myRedux.js"></script>
   <script>
+    // 通过 enhancer 对 store 进行增强
+    // 实现异步处理 store
+    // 即实现 redux-thunk 功能
+    function enhancer (createStore) {
+      return function (reducer, preloadedState) {
+        var store = createStore(reducer, preloadedState)
+        var dispatch = store.dispatch
+        function _dispatch (action) {
+          if (typeof action === 'function') {
+            return action(dispatch)
+          }
+          dispatch(action)
+        }
+        return {
+          ...store,
+          dispatch: _dispatch
+        }
+      }
+    }
     function reducer (state, action) {
       switch (action.type) {
         case 'increment':
@@ -23,14 +42,20 @@
           return state
       }
     }
-    var store = createStore(reducer, 0)
+    var store = createStore(reducer, 0, enhancer)
 
     store.subscribe(function () {
       document.getElementById('box').innerHTML = store.getState()
     })
 
     document.getElementById('increment').onclick = function () {
-      store.dispatch({ type: 'increment' })
+      // store.dispatch({ type: 'increment' })
+      // 异步操作
+      store.dispatch(function (dispatch) {
+        setTimeout(function () {
+          dispatch({ type: 'increment' })
+        }, 1000)
+      })
     }
 
     document.getElementById('decrement').onclick = function () {
