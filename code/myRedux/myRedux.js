@@ -96,3 +96,15 @@ function compose () {
     return dispatch
   }
 }
+
+function bindActionCreators (actionCreators, dispatch) {
+  var boundActionCreators = {}
+  for (var key in actionCreators) {
+    boundActionCreators[key] = function () {
+      // actionCreators[key]() -> 得到 action
+      // dispatch 触发 action
+      dispatch(actionCreators[key]())
+    }
+  }
+  return boundActionCreators
+}
