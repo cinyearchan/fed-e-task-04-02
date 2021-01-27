@@ -1,4 +1,4 @@
-import { observable, action, configure, runInAction, flow } from 'mobx'
+import { observable, action, configure, runInAction, flow, computed } from 'mobx'
 import axios from 'axios'
 
 // 通过配置强制程序使用 action 函数更改应用程序中的状态
@@ -26,6 +26,10 @@ class Counter {
     let { data } = yield axios.get('https://api.github.com/users')
     this.users = data
   }).bind(this)
+
+  @computed get getResult () {
+    return this.count * 10
+  }
 }
 
 const counter = new Counter()
