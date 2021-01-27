@@ -1,4 +1,4 @@
-import { observable, action, configure, runInAction } from 'mobx'
+import { observable, action, configure, runInAction, flow } from 'mobx'
 import axios from 'axios'
 
 // 通过配置强制程序使用 action 函数更改应用程序中的状态
@@ -17,10 +17,15 @@ class Counter {
     this.count = this.count - 1
   }
 
-  @action.bound async getData () {
-    let { data } = await axios.get('https://api.github.com/users')
-    runInAction(() => this.users = data)
-  }
+  // @action.bound async getData () {
+  //   let { data } = await axios.get('https://api.github.com/users')
+  //   runInAction(() => this.users = data)
+  // }
+
+  getData = flow(function* () {
+    let { data } = yield axios.get('https://api.github.com/users')
+    this.users = data
+  }).bind(this)
 }
 
 const counter = new Counter()
