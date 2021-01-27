@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react'
 
+@inject('todo')
+@observer
 class TodoList extends Component {
   render () {
     return (
