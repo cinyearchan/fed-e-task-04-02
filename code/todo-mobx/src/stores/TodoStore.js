@@ -2,6 +2,7 @@ import { action, computed, observable } from "mobx"
 
 class TodoStore {
   @observable todos = []
+  @observable condition = 'All'
 
   @action.bound todoAdd (taskName) {
     this.todos.push({
@@ -19,7 +20,26 @@ class TodoStore {
   }
 
   @computed get unfinishedTodoCount () {
-    return this.todos.filter(todo => todo.isCompleted === false).length
+    return this.todos.filter(todo => !todo.isCompleted).length
+  }
+
+  @action.bound changeCondition (condition) {
+    this.condition = condition
+  }
+
+  @computed get filterTodo () {
+    switch (this.condition) {
+      case 'All':
+        return this.todos
+      case 'Active':
+        return this.todos.filter(todo => !todo.isCompleted)
+      case 'Completed':
+        return this.todos.filter(todo => todo.isCompleted)
+    }
+  }
+
+  @action.bound clearCompleted () {
+    this.todos = this.todos.filter(todo => !todo.isCompleted)
   }
 }
 

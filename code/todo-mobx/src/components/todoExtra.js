@@ -5,23 +5,23 @@ import { inject, observer } from 'mobx-react'
 @observer
 class TodoExtra extends Component {
   render () {
-    const { unfinishedTodoCount } = this.props.todo
+    const { unfinishedTodoCount, condition, changeCondition, clearCompleted } = this.props.todo
     return (
       <footer className="footer">
 				<span className="todo-count"><strong>{ unfinishedTodoCount }</strong> item left</span>
 				<ul className="filters">
 					<li>
-						<button className="selected">All</button>
+						<button className={condition === 'All' ? 'selected' : ''} onClick={() => changeCondition('All')}>All</button>
 					</li>
 					<li>
-						<button>Active</button>
+						<button className={condition === 'Active' ? 'selected' : ''} onClick={() => changeCondition('Active')}>Active</button>
 					</li>
 					<li>
-						<button>Completed</button>
+						<button className={condition === 'Completed' ? 'selected' : ''} onClick={() => changeCondition('Completed')}>Completed</button>
 					</li>
 				</ul>
 				
-				<button className="clear-completed">Clear completed</button>
+				<button className="clear-completed" onClick={clearCompleted}>Clear completed</button>
 			</footer>
     )
   }
