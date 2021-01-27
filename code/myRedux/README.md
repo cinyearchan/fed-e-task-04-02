@@ -127,4 +127,42 @@ function compose () {
 
 
 #### `bindActionCreators`
+```javascript
+function bindActionCreators (actionCreators, dispatch) {
+  var boundActionCreators = {}
+  for (var key in actionCreators) {
+    (function (key) {
+      boundActionCreators[key] = function () {
+        // actionCreators[key]() -> 得到 action
+        // dispatch 触发 action
+        dispatch(actionCreators[key]())
+      }
+    })(key)
+  }
+  return boundActionCreators
+}
+```
 
+#### `combineReducers`
+> `reducer` 函数的化整为零和聚沙成塔
+```javascript
+function combineReducers (reducers) {
+  // 检查 reducer 类型，必须是函数
+  var reducerkeys = Object.keys(reducers)
+  for (var i = 0; i < reducerkeys.length; i++) {
+    var key = reducerkeys[i]
+    if (typeof reducers[key] !== 'function') throw new Error('reducer 必须是函数')
+  }
+  // 调用一个一个的小的 reducer，将每一个小的 reducer 中返回的状态存储在一个新的大的对象中
+  return function (state, action) {
+    var nextState = {}
+    for (var i = 0; i < reducerkeys.length; i++) {
+      var key = reducerkeys[i]
+      var reducer = reducers[key]
+      var prevStateForKey = state[key]
+      nextState[key] = reducer(prevStateForKey, action)
+    }
+    return nextState
+  }
+}
+```
