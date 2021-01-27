@@ -8,6 +8,10 @@ class TodoStore {
       taskName
     })
   }
+
+  @action.bound todoDelete (index) {
+    this.todos.splice(index, 1)
+  }
 }
 
 const todo = new TodoStore()

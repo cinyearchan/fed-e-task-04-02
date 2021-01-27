@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 @observer
 class TodoList extends Component {
   render () {
-    const { todos } = this.props.todo
+    const { todos, todoDelete } = this.props.todo
     return (
       <section className="main">
 				<input className="toggle-all" type="checkbox" />
@@ -16,7 +16,7 @@ class TodoList extends Component {
                 <div className="view">
                   <input className="toggle" type="checkbox" />
                   <label>{ todo.taskName }</label>
-                  <button className="destroy"></button>
+                  <button className="destroy" onClick={() => todoDelete(index)}></button>
                 </div>
                 <input className="edit" />
               </li>
