@@ -5,8 +5,8 @@ import { inject, observer } from 'mobx-react'
 @observer
 class App extends Component {
   componentDidMount () {
-    const { getData } = this.props.counter
-    getData()
+    // const { getData } = this.props.counter
+    // getData()
   }
   render () {
     const { counter } = this.props
@@ -18,6 +18,10 @@ class App extends Component {
         { counter.getResult }
       </div>
       <div>
+        <input type="text" value={counter.username} onChange={(e) => counter.changeUsername(e.target.value)}/>
+        {counter.username}
+      </div>
+      {/* <div>
         {
           counter.users.map(user => (
             <div key={user.id}>
@@ -26,7 +30,7 @@ class App extends Component {
             </div>
           ))
         }
-      </div>
+      </div> */}
     </div>)
   }
 }
