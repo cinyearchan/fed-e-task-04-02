@@ -100,11 +100,13 @@ function compose () {
 function bindActionCreators (actionCreators, dispatch) {
   var boundActionCreators = {}
   for (var key in actionCreators) {
-    boundActionCreators[key] = function () {
-      // actionCreators[key]() -> 得到 action
-      // dispatch 触发 action
-      dispatch(actionCreators[key]())
-    }
+    (function (key) {
+      boundActionCreators[key] = function () {
+        // actionCreators[key]() -> 得到 action
+        // dispatch 触发 action
+        dispatch(actionCreators[key]())
+      }
+    })(key)
   }
   return boundActionCreators
 }

@@ -45,7 +45,8 @@
       }
     }
     // var store = createStore(reducer, 0, enhancer)
-    var store = createStore(reducer, 0, applyMiddleware(logger, thunk))
+    // var store = createStore(reducer, 0, applyMiddleware(logger, thunk))
+    var store = createStore(reducer, 0)
 
     store.subscribe(function () {
       document.getElementById('box').innerHTML = store.getState()
