@@ -1,4 +1,4 @@
-import { action, observable } from "mobx"
+import { action, computed, observable } from "mobx"
 
 class TodoStore {
   @observable todos = []
@@ -16,6 +16,10 @@ class TodoStore {
 
   @action.bound todoChangeStatus (index, state) {
     this.todos[index].isCompleted = state
+  }
+
+  @computed get unfinishedTodoCount () {
+    return this.todos.filter(todo => todo.isCompleted === false).length
   }
 }
 

@@ -5,9 +5,10 @@ import { inject, observer } from 'mobx-react'
 @observer
 class TodoExtra extends Component {
   render () {
+    const { unfinishedTodoCount } = this.props.todo
     return (
       <footer className="footer">
-				<span className="todo-count"><strong>0</strong> item left</span>
+				<span className="todo-count"><strong>{ unfinishedTodoCount }</strong> item left</span>
 				<ul className="filters">
 					<li>
 						<button className="selected">All</button>
