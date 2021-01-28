@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
+import AppleBox from './appleBox'
+import AppleList from './appleList'
 
 class App extends Component {
   render () {
     return (
-      <div>app working</div>
+      <div className="app">
+        <AppleBox></AppleBox>
+        <AppleList></AppleList>
+      </div>
     )
   }
 }
